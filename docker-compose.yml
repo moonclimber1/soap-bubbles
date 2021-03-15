@@ -1,0 +1,30 @@
+version: '3'
+services:
+  nodejs:
+    build:
+      context: ./socket-server
+      dockerfile: Dockerfile
+    image: nodejs
+    container_name: nodejs
+    restart: unless-stopped
+    networks:
+      - app-network
+  webserver:
+    build:
+      context: ./soap-client
+      dockerfile: Dockerfile
+    image: nginx
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-conf:/etc/nginx/conf.d
+    depends_on:
+      - nodejs
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge    
