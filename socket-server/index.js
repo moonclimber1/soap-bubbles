@@ -6,6 +6,25 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+
+let bubbles = [];
+
+let bubble = {
+  flying: false,
+  client: 12,
+  posX: 0,
+  posY: 0,
+  imagePath: '',
+}
+
+io.on('send', (bubble) => {
+  bubbles.push(bubble)
+});
+
+io.on('blow', (bubbleId) => {
+
+});
+
 io.on('connection', (socket) => {
   console.log('a user connected');
   socket.on('disconnect', () => {
