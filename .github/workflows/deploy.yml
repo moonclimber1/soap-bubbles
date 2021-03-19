@@ -16,8 +16,9 @@ jobs:
 
     steps:
       - name: SSH to Server
-      - run: ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
-      - run: pwd
+        run: |
+          ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+          pwd
 
     # - name: ssh deploy
     #   uses: easingthemes/ssh-deploy@v2.1.5
