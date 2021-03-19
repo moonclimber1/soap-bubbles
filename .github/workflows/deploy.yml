@@ -11,15 +11,8 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    # steps:
-    #   - name: SSH to Server
-    #     run: |
-    #       ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
-    #       pwd
-
+    
     - name: ssh deploy
       uses: easingthemes/ssh-deploy@v2.1.5
       with:
@@ -35,3 +28,10 @@ jobs:
     # - run: npm ci
     # - run: npm run build --if-present
     # - run: npm test
+
+        # steps:
+    #   - name: SSH to Server
+    #     run: |
+    #       ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+    #       pwd
+
