@@ -15,13 +15,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: SSH to Server
-    
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: SSH to Server
+      - run: ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+      - run: pwd
+
+    # - name: ssh deploy
+    #   uses: easingthemes/ssh-deploy@v2.1.5
+    #   with:
+    #     SSH_PRIVATE_KEY: 
+    #     REMOTE_HOST: 
+    #     REMOTE_USER: 
+      
+    # - uses: actions/checkout@v2
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v1
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    # - run: npm ci
+    # - run: npm run build --if-present
+    # - run: npm test
