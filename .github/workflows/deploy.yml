@@ -21,8 +21,8 @@ jobs:
           key: ${{ secrets.AZURE_SSH }}
           script: |
             whoami
-            ls -al
-            su - webby
+            ls -la
+            ls
  
     # - name: SSH to Server
     #   run: |
