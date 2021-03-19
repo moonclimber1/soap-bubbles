@@ -22,6 +22,7 @@ jobs:
           script: |
             whoami
             ls -al
+            su - webby
  
     # - name: SSH to Server
     #   run: |
