@@ -2,7 +2,7 @@ const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, {
   cors: {
-    origin: "http://localhost:80",
+    origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   }
 });
@@ -43,6 +43,9 @@ io.on('connection', (socket) => {
 
 
   socket.on('send to world', (bubble) => {
+    console.log("got bubble sent to me", bubble)
+
+    if(!worldClient) return;
     io.to(worldClient.id).emit('send to world', bubble)
   })
 
