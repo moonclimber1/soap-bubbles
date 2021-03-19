@@ -16,10 +16,10 @@ jobs:
     - name: SSH to Server
       run: |
         pwd
-        echo ${{ secrets.AZURE_SSH }}
-        ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+        ssh ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
         pwd
         ls
+        echo ${{ secrets.AZURE_SSH }}
 
 
 
