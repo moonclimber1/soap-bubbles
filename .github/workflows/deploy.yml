@@ -14,18 +14,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
-      - name: SSH to Server
-        run: |
-          ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
-          pwd
+    # steps:
+    #   - name: SSH to Server
+    #     run: |
+    #       ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+    #       pwd
 
-    # - name: ssh deploy
-    #   uses: easingthemes/ssh-deploy@v2.1.5
-    #   with:
-    #     SSH_PRIVATE_KEY: 
-    #     REMOTE_HOST: 
-    #     REMOTE_USER: 
+    - name: ssh deploy
+      uses: easingthemes/ssh-deploy@v2.1.5
+      with:
+        SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH }}
+        REMOTE_HOST: 51.107.89.47
+        REMOTE_USER: jonaswolter
       
     # - uses: actions/checkout@v2
     # - name: Use Node.js ${{ matrix.node-version }}
