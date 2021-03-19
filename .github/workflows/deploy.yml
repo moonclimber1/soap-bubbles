@@ -12,6 +12,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     - name: SSH Deploy
       uses: easingthemes/ssh-deploy@v2.1.5
       with:
