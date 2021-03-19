@@ -13,12 +13,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: SSH Deploy
-      uses: easingthemes/ssh-deploy@v2.1.5
-      with:
-        SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH }}
-        REMOTE_HOST: 51.107.89.47
-        REMOTE_USER: jonaswolter
+    - name: SSH to Server
+      run: |
+        ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
+        pwd
+
+
+    
+    # - name: SSH Deploy
+    #   uses: easingthemes/ssh-deploy@v2.1.5
+    #   with:
+    #     SSH_PRIVATE_KEY: ${{ secrets.AZURE_SSH }}
+    #     REMOTE_HOST: 51.107.89.47
+    #     REMOTE_USER: jonaswolter
       
     # - uses: actions/checkout@v2
     # - name: Use Node.js ${{ matrix.node-version }}
@@ -30,8 +37,5 @@ jobs:
     # - run: npm test
 
     
-  # - name: SSH to Server
-  #   run: |
-  #     ssh -i ${{ secrets.AZURE_SSH }} jonaswolter@51.107.89.47
-  #     pwd
+ 
 
