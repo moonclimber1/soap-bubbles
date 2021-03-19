@@ -22,7 +22,7 @@ jobs:
           script: |
             whoami
             ls -al
-
+ 
     # - name: SSH to Server
     #   run: |
     #     pwd
