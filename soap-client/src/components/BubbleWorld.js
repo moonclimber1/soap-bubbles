@@ -1,6 +1,10 @@
 import React from 'react';
 import io from "socket.io-client";
-import Q5 from "q5xjs/q5";
+// import Q5 from "q5xjs/q5";
+// import "data:text/javascript,self.module = {}";
+// import "https://cdn.jsdelivr.net/gh/reworkcss/css@latest/lib/parse/index.js";
+
+import Q5 from '../assets/q5.js';
 
 class BubbleWorld extends React.Component {
     componentDidMount() {
@@ -10,7 +14,9 @@ class BubbleWorld extends React.Component {
             console.log("World received bubble yeahh", bubble)
         })
 
-        // let q5 = new Q5();
+        let q5 = new Q5();
+        console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ componentDidMount ~ q5", q5)
+        // Q5();
         // console.log("🚀 ~ Q5", Q5)
 
         // const script = document.createElement("script");

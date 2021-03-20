@@ -1,11 +1,11 @@
-import logo from './logo.svg';
+
 import './App.css';
-import VolumeMeter from './VolumeMeter';
+import VolumeMeter from './components/VolumeMeter';
 import React from 'react';
 
-import bubble from './soap_bubble.jpg';
-import MobileClient from './MobileClient';
-import BubbleWorld from './BubbleWorld';
+import bubble from './assets/soap_bubble.jpg';
+import MobileClient from './components/MobileClient';
+import BubbleWorld from './components/BubbleWorld';
 
 class App extends React.Component {
 
@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   componentDidMount(){
-    if(window.location.pathname == '/world'){
+    if(window.location.pathname === '/world'){
       this.setState({mobileClient: false})
     }else{
       this.setState({mobileClient: true})
