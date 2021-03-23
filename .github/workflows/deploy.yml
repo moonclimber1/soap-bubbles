@@ -24,7 +24,7 @@ jobs:
             git pull
             docker-compose down
             docker-compose build --force-rm --no-cache nodejs webserver
-            docker-compose up
+            docker-compose up -d
  
     # - name: SSH to Server
     #   run: |
