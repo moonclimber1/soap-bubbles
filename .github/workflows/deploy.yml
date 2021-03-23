@@ -17,12 +17,12 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 51.107.89.47
-          username: jonaswolter
+          username: webby
           key: ${{ secrets.AZURE_SSH }}
           script: |
-            whoami
-            pwd
-            ls -la
+            docker-compose down
+            docker-compose build --force-rm --no-cache nodejs webserver
+            docker-compose up
  
     # - name: SSH to Server
     #   run: |
