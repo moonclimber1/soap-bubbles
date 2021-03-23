@@ -20,6 +20,8 @@ jobs:
           username: webby
           key: ${{ secrets.AZURE_SSH }}
           script: |
+            cd soap-bubbles
+            git pull
             docker-compose down
             docker-compose build --force-rm --no-cache nodejs webserver
             docker-compose up
