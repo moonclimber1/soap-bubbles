@@ -1,4 +1,5 @@
-function Q5(scope){
+function Q5(rootDOM){
+  const scope = undefined;
   return new graphics(scope);
   function graphics(scope){let $ = (scope == "global" ? window : this);
     $.canvas = document.createElement("canvas");
@@ -10,11 +11,11 @@ function Q5(scope){
     $.canvas.height = $.height;
     
     if (scope != "offscreen"){
-      if (document.body){
-        document.body.appendChild($.canvas);
+      if (rootDOM){
+        rootDOM.appendChild($.canvas);
       }else{
         window.addEventListener("load",function(){
-          document.body.appendChild($.canvas);
+          rootDOM.appendChild($.canvas);
         })
       }
     }

@@ -34,10 +34,6 @@ class App extends React.Component {
     return (
       <div className="App">
         {client}
-        <header className="App-header">
-          <img src={bubble} className="App-logo" alt="logo" />
-          <VolumeMeter/>
-        </header>
       </div>
     );
   }
