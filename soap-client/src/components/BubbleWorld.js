@@ -16,7 +16,9 @@ class BubbleWorld extends React.Component {
     
     let q5 = new Q5(canvasWrapper);
     q5.createCanvas(1000, 1000);
-    q5.background(140);
+    q5.background(80);
+    q5.noStroke()
+    q5.ellipse(500,500,100,100)
 
     const bubble = new Bubble(new Victor(500,500), true, new Victor(500,500));
     bubble.updatePhysics();
