@@ -20,6 +20,7 @@ class BubbleWorld extends React.Component {
     q5.noStroke()
     q5.ellipse(500,500,100,100)
     q5.ellipse(700,700,100,100)
+    q5.ellipse(900,200,100,100)
 
     const bubble = new Bubble(new Victor(500,500), true, new Victor(500,500));
     bubble.updatePhysics();
