@@ -7,26 +7,26 @@ class BubbleWorld extends React.Component {
   componentDidMount() {
     this.socket = io(process.env.REACT_APP_SOCKET_HOST, { transports: ["websocket"], query: { clientType: "world" } });
 
-    this.socket.on("send to world", (bubble) => {
-      console.log("World received bubble yeahh", bubble);
-    });
+    // this.socket.on("send to world", (bubble) => {
+    //   console.log("World received bubble yeahh", bubble);
+    // });
 
-    const canvasWrapper = document.getElementById('canvas-wrapper');
-    console.log("🚀 ~ file: BubbleWorld.js ~ line 15 ~ BubbleWorld ~ componentDidMount ~ canvas", canvasWrapper)
+    // const canvasWrapper = document.getElementById('canvas-wrapper');
+    // console.log("🚀 ~ file: BubbleWorld.js ~ line 15 ~ BubbleWorld ~ componentDidMount ~ canvas", canvasWrapper)
     
-    let q5 = new Q5(canvasWrapper);
-    q5.createCanvas(1000, 1000);
-    q5.noStroke()
+    // let q5 = new Q5(canvasWrapper);
+    // q5.createCanvas(1000, 1000);
+    // q5.noStroke()
   
 
-    const bubble = new Bubble(new Victor(500,500), true, new Victor(500,500));
-    q5.draw = () => {
-      if(q5.keyIsDown(q5.UP_ARROW)){
-        bubble.applyForce(new Victor(0,-2))
-      }
-      q5.background(80);
-      q5.ellipse(bubble.pos.x,bubble.pos.y,150,150)
-    }
+    // const bubble = new Bubble(new Victor(500,500), true, new Victor(500,500));
+    // q5.draw = () => {
+    //   if(q5.keyIsDown(q5.UP_ARROW)){
+    //     bubble.applyForce(new Victor(0,-2))
+    //   }
+    //   q5.background(80);
+    //   q5.ellipse(bubble.pos.x,bubble.pos.y,150,150)
+    // }
 
     
     
@@ -54,7 +54,7 @@ class BubbleWorld extends React.Component {
    
     return (
       <div className="bubble-world">
-        <h1>Hello, I'm the bubble world</h1>
+        <h1>Hello, I'm the bubble w00orld</h1>
         <div id="canvas-wrapper"></div>
       </div>
     );
