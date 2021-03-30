@@ -37,8 +37,9 @@ class MobileClient extends React.Component {
         let backgroundColor = q5.color(57, 66, 97);
         q5.background(backgroundColor);
         this.bubble.draw(q5);
+        // this.bubble.pos.y
+        // console.log("🚀 ~ file: MobileClient.js ~ line 42 ~ MobileClient ~ this.socket.on ~ this.bubble.pos.y", this.bubble.pos.y)
       };
-
       this.getLocalStream();
     });
   }
@@ -76,14 +77,9 @@ class MobileClient extends React.Component {
           }
 
           average = values / length;
-          if(average > 30){
-            self.bubble.applyForce(new Victor(0, average * -0.02))
+          if(average > 25){
+            self.bubble.applyForce({x: 0, y: average * -0.02})
           }
-         
-          // console.log(
-          //   "🚀 ~ file: MobileClient.js ~ line 151 ~ MobileClient ~ navigator.mediaDevices.getUserMedia ~ average",
-          //   Math.round(average)
-          // );
           average = values = 0;
         };
 
@@ -92,9 +88,6 @@ class MobileClient extends React.Component {
         input.connect(analyser);
         analyser.connect(node);
         node.connect(context.destination);
-
-        // window.localAudio.srcObject = stream;
-        // window.localAudio.autoplay = true;
       })
       .catch((err) => {
         console.log("u got an error:" + err);
@@ -129,7 +122,6 @@ class MobileClient extends React.Component {
   render() {
     return (
       <div className="mobile-client">
-        <h1>Hello, I'm a mobile client</h1>
         <div id="canvas-wrapper"></div>
       </div>
     );

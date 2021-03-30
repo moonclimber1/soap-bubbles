@@ -3,7 +3,7 @@
 import Victor from 'victor';
 import Q5 from "./assets/q5.js";
 
-const CIRCLE_RADIUS = 150;
+const CIRCLE_RADIUS = 100;
 const NOISE_OFFSET = 150;
 
 const DRAG_FACTOR = 0.01;
@@ -55,8 +55,8 @@ class Bubble {
     this.pos.add(this.velocity)
 
      // Calculate noise offset
-    this.noiseOffset.x = (STATIC_Q5.noise(this.frame/1600)-0.5) * NOISE_OFFSET
-    this.noiseOffset.y = (STATIC_Q5.noise(this.frame/800)-0.5) * NOISE_OFFSET
+    this.noiseOffset.x = (STATIC_Q5.noise(this.frame/1500)-0.5) * NOISE_OFFSET
+    this.noiseOffset.y = (STATIC_Q5.noise(this.frame/750)-0.5) * NOISE_OFFSET
 
     // update frame count
     this.frame += 1
