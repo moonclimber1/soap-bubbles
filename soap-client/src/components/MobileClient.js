@@ -76,12 +76,14 @@ class MobileClient extends React.Component {
           }
 
           average = values / length;
-          self.bubble.applyForce(new Victor(0, average * -0.01))
+          if(average > 30){
+            self.bubble.applyForce(new Victor(0, average * -0.02))
+          }
+         
           // console.log(
           //   "🚀 ~ file: MobileClient.js ~ line 151 ~ MobileClient ~ navigator.mediaDevices.getUserMedia ~ average",
-          //   average
+          //   Math.round(average)
           // );
-          // this.currentBubble
           average = values = 0;
         };
 
