@@ -36,7 +36,8 @@ class BubbleWorld extends React.Component {
     q5.createCanvas(window.innerWidth, window.innerHeight);
 
     q5.draw = () => {
-      q5.background(80);
+      let backgroundColor = q5.color(57, 66, 97);
+      q5.background(backgroundColor);
       const xLen = window.innerWidth / this.bubbles.length
       this.bubbles.forEach((bubble, index) => {
         const c = bubble.color;
