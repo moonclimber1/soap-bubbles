@@ -12,12 +12,10 @@ class MobileClient extends React.Component {
   }
 
   componentDidMount() {
-
     this.socket = io(process.env.REACT_APP_SOCKET_HOST, { transports: ["websocket"], query: { clientType: "mobile" } });
     this.socket.on("connect", () => {
       this.bubble = this.createBubble(this.socket.id);
       console.log("🚀 ~ file: MobileClient.js ~ line 17 ~ MobileClient ~ socket.on ~ this.currentBubble", this.bubble);
-      this.sendBubbleToWorld();
 
       // Canvas Initialization
       const canvasWrapper = document.getElementById("canvas-wrapper");
@@ -37,8 +35,10 @@ class MobileClient extends React.Component {
         let backgroundColor = q5.color(57, 66, 97);
         q5.background(backgroundColor);
         this.bubble.draw(q5);
-        // this.bubble.pos.y
-        // console.log("🚀 ~ file: MobileClient.js ~ line 42 ~ MobileClient ~ this.socket.on ~ this.bubble.pos.y", this.bubble.pos.y)
+
+        if (this.bubble.pos.y < -150) {
+          this.sendBubbleToWorld();
+        }
       };
       this.getLocalStream();
     });
@@ -77,8 +77,8 @@ class MobileClient extends React.Component {
           }
 
           average = values / length;
-          if(average > 25){
-            self.bubble.applyForce({x: 0, y: average * -0.02})
+          if (average > 20) {
+            self.bubble.applyForce({ x: 0, y: average * average * -0.001 });
           }
           average = values = 0;
         };
@@ -97,10 +97,18 @@ class MobileClient extends React.Component {
   createBubble(socketID) {
     this.bubbleCount++;
     const bubbleID = socketID + "_" + this.bubbleCount;
-    return new Bubble(bubbleID, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, true, {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
-    });
+    return new Bubble(
+      bubbleID,
+      {
+        x: window.innerWidth / 2,
+        y: (2 * window.innerHeight) / 3,
+      },
+      true,
+      {
+        x: window.innerWidth / 2,
+        y: (2 * window.innerHeight) / 3,
+      }
+    );
 
     // return {
     //   id: bubbleID,
