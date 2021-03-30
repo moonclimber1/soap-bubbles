@@ -49,6 +49,13 @@ io.on('connection', (socket) => {
     io.to(worldClient.id).emit('send to world', bubble)
   })
 
+  socket.on('blow', (blowInfo) => {
+    console.log("🚀 ~ file: index.js ~ line 53 ~ socket.on ~ blowInfo", blowInfo)
+    
+    if(!worldClient) return;
+    io.to(worldClient.id).emit('blow', blowInfo)
+  })
+
   socket.on('send to client', (bubble) => {
     mobileClients.forEach(client =>{
       io.to(client.id).emit('send to client')

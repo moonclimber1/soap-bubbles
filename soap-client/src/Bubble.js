@@ -14,6 +14,8 @@ const STATIC_Q5 = new Q5(window.document, 'offscreen');
 class Bubble {
   constructor(id, startPos, pullEnabled, pullPoint, staticQ5) {
     this.id = id;
+    this.imagePath = "";
+
     this.pos = new Victor(startPos.x, startPos.y)
     this.velocity = new Victor(0,0);
     this.noiseOffset = new Victor(0,0);
@@ -64,6 +66,7 @@ class Bubble {
 
   draw(q5){
     q5.fill(this.color)
+    q5.noStroke()
     let x = this.pos.x + this.noiseOffset.x
     let y = this.pos.y + this.noiseOffset.y
     q5.ellipse(x, y, CIRCLE_RADIUS*2, CIRCLE_RADIUS*2)
