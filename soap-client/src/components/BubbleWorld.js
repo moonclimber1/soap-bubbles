@@ -16,14 +16,21 @@ class BubbleWorld extends React.Component {
     
     let q5 = new Q5(canvasWrapper);
     q5.createCanvas(1000, 1000);
-    q5.background(80);
     q5.noStroke()
-    q5.ellipse(500,500,100,100)
-    q5.ellipse(700,700,100,100)
-    q5.ellipse(900,200,100,100)
+  
 
     const bubble = new Bubble(new Victor(500,500), true, new Victor(500,500));
-    bubble.updatePhysics();
+    q5.draw = () => {
+      if(q5.keyIsDown(q5.UP_ARROW)){
+        bubble.applyForce(new Victor(0,-2))
+      }
+      q5.background(80);
+      q5.ellipse(bubble.pos.x,bubble.pos.y,150,150)
+    }
+
+    
+    
+    
 
   
 
@@ -46,7 +53,7 @@ class BubbleWorld extends React.Component {
   render() {
    
     return (
-      <div className="BubbleWorld">
+      <div className="bubble-world">
         <h1>Hello, I'm the bubble world</h1>
         <div id="canvas-wrapper"></div>
       </div>

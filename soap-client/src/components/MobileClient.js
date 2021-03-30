@@ -1,121 +1,136 @@
 import React from "react";
 import io from "socket.io-client";
+import Victor from "victor";
+import Q5 from "../assets/q5.js";
+import Bubble from "../Bubble.js";
 
 class MobileClient extends React.Component {
   constructor(props) {
     super(props);
     this.bubbleCount = 0;
-    this.currentBubble = null;
+    this.bubble = null;
   }
 
   componentDidMount() {
+
     this.socket = io(process.env.REACT_APP_SOCKET_HOST, { transports: ["websocket"], query: { clientType: "mobile" } });
-
     this.socket.on("connect", () => {
-      this.currentBubble = this.createBubble(this.socket.id);
-      console.log("🚀 ~ file: MobileClient.js ~ line 17 ~ MobileClient ~ socket.on ~ this.currentBubble", this.currentBubble);
+      this.bubble = this.createBubble(this.socket.id);
+      console.log("🚀 ~ file: MobileClient.js ~ line 17 ~ MobileClient ~ socket.on ~ this.currentBubble", this.bubble);
       this.sendBubbleToWorld();
+
+      // Canvas Initialization
+      const canvasWrapper = document.getElementById("canvas-wrapper");
+      let q5 = new Q5(canvasWrapper);
+      q5.createCanvas(window.innerWidth, window.innerHeight);
+      q5.noStroke();
+
+      //Resize Listener
+      window.addEventListener("resize", () => {
+        q5.resizeCanvas(window.innerWidth, window.innerHeight);
+      });
+
+      q5.draw = () => {
+        if (q5.keyIsDown(q5.UP_ARROW)) {
+          this.bubble.applyForce(new Victor(0, -2));
+        }
+        let backgroundColor = q5.color(57, 66, 97);
+        q5.background(backgroundColor);
+        this.bubble.draw(q5);
+      };
+
+      this.getLocalStream();
     });
+  }
 
-//     /**
-//      * Create global accessible variables that will be modified later
-//      */
-//     var audioContext = null;
-//     var meter = null;
-//     var rafID = null;
-//     var mediaStreamSource = null;
+  getLocalStream() {
+    const self = this;
+    navigator.mediaDevices
+      .getUserMedia({ video: false, audio: true })
+      .then((stream) => {
+        console.log(
+          "🚀 ~ file: MobileClient.js ~ line 132 ~ MobileClient ~ navigator.mediaDevices.getUserMedia ~ window",
+          window
+        );
+        window.localStream = stream;
 
-//     // Retrieve AudioContext with all the prefixes of the browsers
-//     window.AudioContext = window.AudioContext || window.webkitAudioContext;
+        var AudioContext = window.AudioContext || window.webkitAudioContext;
+        var context = new AudioContext();
 
-//     // Get an audio context
-//     audioContext = new AudioContext();
+        var analyser = context.createAnalyser();
+        analyser.smoothingTimeConstant = 0.2;
+        analyser.fftSize = 1024;
 
-//     /**
-//      * Callback triggered if the microphone permission is denied
-//      */
-//     function onMicrophoneDenied() {
-//       alert("Stream generation failed.");
-//     }
+        var node = context.createScriptProcessor(2048, 1, 1);
 
-//     /**
-//      * Callback triggered if the access to the microphone is granted
-//      */
-//     function onMicrophoneGranted(stream) {
-//       // Create an AudioNode from the stream.
-//       mediaStreamSource = audioContext.createMediaStreamSource(stream);
-//       // Create a new volume meter and connect it.
-//       meter = createAudioMeter(audioContext);
-//       mediaStreamSource.connect(meter);
+        var values = 0;
+        var average;
+        node.onaudioprocess = function () {
+          // bitcount is fftsize / 2
+          var array = new Uint8Array(analyser.frequencyBinCount);
+          analyser.getByteFrequencyData(array);
 
-//       // Trigger callback that shows the level of the "Volume Meter"
-//       onLevelChange();
-//     }
+          var length = array.length;
+          for (var i = 0; i < length; i++) {
+            values += array[i];
+          }
 
-//     /**
-//      * This function is executed repeatedly
-//      */
-//     function onLevelChange(time) {
-//       // check if we're currently clipping
+          average = values / length;
+          self.bubble.applyForce(new Victor(0, average * -0.01))
+          // console.log(
+          //   "🚀 ~ file: MobileClient.js ~ line 151 ~ MobileClient ~ navigator.mediaDevices.getUserMedia ~ average",
+          //   average
+          // );
+          // this.currentBubble
+          average = values = 0;
+        };
 
-//       if (meter.checkClipping()) {
-//         console.warn(meter.volume);
-//       } else {
-//         console.log(meter.volume);
-//       }
+        var input = context.createMediaStreamSource(stream);
 
-//       // set up the next callback
-//       rafID = window.requestAnimationFrame(onLevelChange);
-//     }
+        input.connect(analyser);
+        analyser.connect(node);
+        node.connect(context.destination);
 
-//     // Try to get access to the microphone
-//     try {
-//       // Retrieve getUserMedia API with all the prefixes of the browsers
-//       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-//       // Ask for an audio input
-//       navigator.getUserMedia(
-//         {
-//           audio: {
-//             mandatory: {
-//               googEchoCancellation: "false",
-//               googAutoGainControl: "false",
-//               googNoiseSuppression: "false",
-//               googHighpassFilter: "false",
-//             },
-//             optional: [],
-//           },
-//         },
-//         onMicrophoneGranted,
-//         onMicrophoneDenied
-//       );
-//     } catch (e) {
-//       alert("getUserMedia threw exception :" + e);
-//     }
-}
+        // window.localAudio.srcObject = stream;
+        // window.localAudio.autoplay = true;
+      })
+      .catch((err) => {
+        console.log("u got an error:" + err);
+      });
+  }
 
   createBubble(socketID) {
     this.bubbleCount++;
     const bubbleID = socketID + "_" + this.bubbleCount;
-    return {
-      id: bubbleID,
-      velocity: { x: 0, y: 1 },
-      imagePath: "",
-    };
+    return new Bubble(bubbleID, { x: window.innerWidth / 2, y: window.innerHeight / 2 }, true, {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    });
+
+    // return {
+    //   id: bubbleID,
+    //   velocity: { x: 0, y: 1 },
+    //   imagePath: "",
+    // };
   }
 
   sendBubbleToWorld() {
     // Error Handling
-    if (!this.currentBubble) {
+    if (!this.bubble) {
       console.log("Error: No bubble exists that can be sent!");
       return;
     }
     // Emit Message
-    this.socket.emit("send to world", this.currentBubble);
+    this.socket.emit("send to world", this.bubble);
   }
 
   render() {
-    return <h1>Hello, I'm a mobile client</h1>;
+    return (
+      <div className="mobile-client">
+        <h1>Hello, I'm a mobile client</h1>
+        <div id="canvas-wrapper"></div>
+      </div>
+    );
   }
 }
 

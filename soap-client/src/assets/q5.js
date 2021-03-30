@@ -1,5 +1,4 @@
-function Q5(rootDOM){
-  const scope = undefined;
+function Q5(rootDOM, scope){
   return new graphics(scope);
   function graphics(scope){let $ = (scope == "global" ? window : this);
     $.canvas = document.createElement("canvas");
