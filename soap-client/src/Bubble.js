@@ -4,7 +4,7 @@ import Victor from 'victor';
 import Q5 from "./assets/q5.js";
 
 const CIRCLE_RADIUS = 100;
-const NOISE_OFFSET = 150;
+const NOISE_OFFSET = 200;
 
 const DRAG_FACTOR = 0.01;
 const PULL_FACTOR = 0.00000002;
@@ -12,7 +12,7 @@ const PULL_FACTOR = 0.00000002;
 const STATIC_Q5 = new Q5(window.document, 'offscreen');
 
 class Bubble {
-  constructor(id, startPos, pullEnabled, pullPoint, staticQ5) {
+  constructor(id, startPos, pullEnabled, pullPoint) {
     this.id = id;
     this.imagePath = "";
 
@@ -21,9 +21,7 @@ class Bubble {
     this.noiseOffset = new Victor(0,0);
 
     this.pullEnabled = pullEnabled;
-    this.pullPoint = new Victor(pullPoint.x, pullPoint.y);
-
-    this.staticQ5 = staticQ5;
+    this.setPullPoint(pullPoint);
 
     this.physicsTimer = setInterval(this.updatePhysics.bind(this), 17);
     this.frame = 0;
@@ -31,6 +29,20 @@ class Bubble {
     const C1 =  STATIC_Q5.color(34,193,195);
     const C2 = STATIC_Q5.color(253,187,45);
     this.color = STATIC_Q5.lerpColor(C1, C2, Math.random());
+  }
+
+  static createFromBubble(bubble){
+    const newBubble = new Bubble(bubble.id, bubble.pos, bubble.pullEnabled, bubble.pullPoint);
+    newBubble.imagePath = bubble.imagePath
+    newBubble.velocity = new Victor(bubble.velocity.x, bubble.velocity.y);
+    newBubble.noiseOffset = bubble.noiseOffset;
+    newBubble.frame = bubble.frame;
+    newBubble.color = STATIC_Q5.color(bubble.color._r,bubble.color._g,bubble.color._b)
+    return newBubble;
+  }
+
+  setPullPoint(pullPoint){
+    this.pullPoint = new Victor(pullPoint.x, pullPoint.y);
   }
 
   applyForce(forceVector) {
@@ -57,8 +69,8 @@ class Bubble {
     this.pos.add(this.velocity)
 
      // Calculate noise offset
-    this.noiseOffset.x = (STATIC_Q5.noise(this.frame/1500)-0.5) * NOISE_OFFSET
-    this.noiseOffset.y = (STATIC_Q5.noise(this.frame/750)-0.5) * NOISE_OFFSET
+    this.noiseOffset.x = (STATIC_Q5.noise(this.frame/1200)-0.5) * NOISE_OFFSET
+    this.noiseOffset.y = (STATIC_Q5.noise(this.frame/600)-0.5) * NOISE_OFFSET
 
     // update frame count
     this.frame += 1

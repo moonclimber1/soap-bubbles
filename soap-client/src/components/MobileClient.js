@@ -31,12 +31,12 @@ class MobileClient extends React.Component {
 
       q5.draw = () => {
         if (q5.keyIsDown(q5.UP_ARROW)) {
-          this.bubble.applyForce(new Victor(0, -2));
+          this.blow(new Victor(0, -2));
         }
       
         if(!this.bubbleIsHere) return;
         
-        let backgroundColor = q5.color(57, 66, 97);
+        let backgroundColor = q5.color(24, 33, 44);
         q5.background(backgroundColor);
 
         
@@ -70,7 +70,7 @@ class MobileClient extends React.Component {
         analyser.smoothingTimeConstant = 0.2;
         analyser.fftSize = 1024;
 
-        var node = context.createScriptProcessor(2048, 1, 1);
+        var node = context.createScriptProcessor(2048, 1, 1); //FIXME: Deprecated Function
 
         var values = 0;
         var average;
@@ -87,6 +87,7 @@ class MobileClient extends React.Component {
           average = values / length;
           if (average > 20) {
             self.blow({ x: 0, y: average * average * -0.0005 })
+            console.log("blow");
           }
           average = values = 0;
         };

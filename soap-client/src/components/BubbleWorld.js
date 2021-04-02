@@ -12,8 +12,14 @@ class BubbleWorld extends React.Component {
   componentDidMount() {
     this.socket = io(process.env.REACT_APP_SOCKET_HOST, { transports: ["websocket"], query: { clientType: "world" } });
 
-    this.socket.on("send to world", (bubble) => {
-      console.log("World received bubble yeahh", bubble);
+    this.socket.on("send to world", (bubbleData) => {
+      console.log("World received bubble yeahh", bubbleData);
+      const bubble = Bubble.createFromBubble(bubbleData);
+      bubble.pos.x = Math.random() * window.innerWidth;
+      bubble.pos.y = window.innerHeight;
+      bubble.setPullPoint( { x: window.innerWidth / 2, y: (3 * window.innerHeight) / 4});
+      console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ this.socket.on ~ bubble", bubble);
+
       this.bubbles.push(bubble);
       console.log(
         "🚀 ~ file: BubbleWorld.js ~ line 21 ~ BubbleWorld ~ this.socket.on ~ this.bubbles.length",
@@ -24,8 +30,7 @@ class BubbleWorld extends React.Component {
     this.socket.on("blow", (blowInfo) => {
       const bubble = this.bubbles.find((bubble) => bubble.id === blowInfo.id);
       if (bubble) {
-        console.log("🚀 ~ file: BubbleWorld.js ~ line 25 ~ BubbleWorld ~ this.socket.on ~ bubble", bubble)
-        // bubble.applyForce(blowInfo.blowForce);
+        bubble.applyForce(blowInfo.blowForce);
       }
     });
 
@@ -36,19 +41,15 @@ class BubbleWorld extends React.Component {
     q5.createCanvas(window.innerWidth, window.innerHeight);
 
     q5.draw = () => {
-      let backgroundColor = q5.color(57, 66, 97);
+      let backgroundColor = q5.color(24, 33, 44);
       q5.background(backgroundColor);
-      const xLen = window.innerWidth / this.bubbles.length
+      // const xLen = window.innerWidth / this.bubbles.length
       this.bubbles.forEach((bubble, index) => {
-        const c = bubble.color;
-        q5.fill(q5.color(c.r,c.g,c.b))
-        // q5.fill(q5.color(30,100,10))
-        // noStroke()
-        q5.ellipse(xLen * index + 50,window.innerHeight/2,50,50)
-      })
-
-      
-      // q5.ellipse(bubble.pos.x,bubble.pos.y,150,150)
+        bubble.draw(q5);
+        // const color = bubble.color;
+        // q5.fill(q5.color(color._r,color._g,color._b))
+        // q5.ellipse(xLen * index + 50,bubble.pos.y,100,100)
+      });
     };
 
     // console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ componentDidMount ~ q5", q5)
@@ -70,7 +71,6 @@ class BubbleWorld extends React.Component {
   render() {
     return (
       <div className="bubble-world">
-        <h1>Hello, I'm the bubble world</h1>
         <div id="world-canvas-wrapper"></div>
       </div>
     );

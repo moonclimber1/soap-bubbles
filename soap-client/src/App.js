@@ -11,22 +11,19 @@ class App extends React.Component {
 
   constructor(props){
     super(props)
-    this.state = {
-      mobileClient: true
-    }
   }
 
   componentDidMount(){
-    if(window.location.pathname === '/world'){
-      this.setState({mobileClient: false})
-    }else{
-      this.setState({mobileClient: true})
-    }
+    // if(window.location.pathname === '/world'){
+    //   this.setState({mobileClient: false})
+    // }else{
+    //   this.setState({mobileClient: true})
+    // }
   }
     
   render(){
     let client;
-    if(this.state.mobileClient){
+    if(window.location.pathname !== '/world'){
       client = <MobileClient/>;
     }else{
       client = <BubbleWorld/>;
