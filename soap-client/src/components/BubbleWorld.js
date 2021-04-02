@@ -16,7 +16,7 @@ class BubbleWorld extends React.Component {
       console.log("World received bubble yeahh", bubbleData);
       const bubble = Bubble.createFromBubble(bubbleData);
       bubble.pos.x = Math.random() * window.innerWidth;
-      bubble.pos.y = window.innerHeight;
+      bubble.pos.y = window.innerHeight+100;
       bubble.setPullPoint( { x: window.innerWidth / 2, y: (3 * window.innerHeight) / 4});
       console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ this.socket.on ~ bubble", bubble);
 
