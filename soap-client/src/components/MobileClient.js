@@ -116,7 +116,8 @@ class MobileClient extends React.Component {
       {
         x: window.innerWidth / 2,
         y: (3 * window.innerHeight) / 4,
-      }
+      },
+      '/Users/jonas/Documents/01_PROGRAMMING_PROJECTS/WEB2_STUDIO/soap-bubbles/soap-client/src/assets/soap_bubble.jpg'
     );
 
     // return {

@@ -1,6 +1,7 @@
 import React from "react";
 import io from "socket.io-client";
 import Victor from "victor";
+import Stats from 'stats.js'
 import Q5 from "../assets/q5.js";
 import Bubble from "../Bubble.js";
 class BubbleWorld extends React.Component {
@@ -34,6 +35,11 @@ class BubbleWorld extends React.Component {
       }
     });
 
+    var stats = new Stats();
+    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    document.body.appendChild( stats.dom );
+
+
     const canvasWrapper = document.getElementById("world-canvas-wrapper");
     // console.log("🚀 ~ file: BubbleWorld.js ~ line 15 ~ BubbleWorld ~ componentDidMount ~ canvas", canvasWrapper)
 
@@ -41,6 +47,7 @@ class BubbleWorld extends React.Component {
     q5.createCanvas(window.innerWidth, window.innerHeight);
 
     q5.draw = () => {
+      stats.begin();
       let backgroundColor = q5.color(24, 33, 44);
       q5.background(backgroundColor);
       // const xLen = window.innerWidth / this.bubbles.length
@@ -50,6 +57,7 @@ class BubbleWorld extends React.Component {
         // q5.fill(q5.color(color._r,color._g,color._b))
         // q5.ellipse(xLen * index + 50,bubble.pos.y,100,100)
       });
+      stats.end();
     };
 
     // console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ componentDidMount ~ q5", q5)
