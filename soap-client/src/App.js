@@ -3,7 +3,6 @@ import './App.css';
 import VolumeMeter from './components/VolumeMeter';
 import React from 'react';
 
-import bubble from './assets/soap_bubble.jpg';
 import MobileClient from './components/MobileClient';
 import BubbleWorld from './components/BubbleWorld';
 

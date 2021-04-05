@@ -4,6 +4,8 @@ import Victor from "victor";
 import Q5 from "../assets/q5.js";
 import Bubble from "../Bubble.js";
 
+import img from '../assets/soap-bubble.jpg';
+
 class MobileClient extends React.Component {
   constructor(props) {
     super(props);
@@ -57,10 +59,6 @@ class MobileClient extends React.Component {
     navigator.mediaDevices
       .getUserMedia({ video: false, audio: true })
       .then((stream) => {
-        console.log(
-          "🚀 ~ file: MobileClient.js ~ line 132 ~ MobileClient ~ navigator.mediaDevices.getUserMedia ~ window",
-          window
-        );
         window.localStream = stream;
 
         var AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -117,7 +115,7 @@ class MobileClient extends React.Component {
         x: window.innerWidth / 2,
         y: (3 * window.innerHeight) / 4,
       },
-      '/Users/jonas/Documents/01_PROGRAMMING_PROJECTS/WEB2_STUDIO/soap-bubbles/soap-client/src/assets/soap_bubble.jpg'
+      img
     );
 
     // return {
