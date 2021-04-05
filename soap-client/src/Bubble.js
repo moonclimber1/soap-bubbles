@@ -2,10 +2,10 @@ import Victor from "victor";
 import Q5 from "./assets/q5.js";
 
 const CIRCLE_RADIUS = 100;
-const NOISE_OFFSET = 200;
-
 const POINTS_NUMBER = 100;
 const WOBBLE_RADIUS = CIRCLE_RADIUS / 3
+
+const POSITION_NOISE_OFFSET = 200;
 
 const DRAG_FACTOR = 0.01;
 const PULL_FACTOR = 0.00000002;
@@ -69,7 +69,6 @@ class Bubble {
       const dirVec = this.pullPoint.clone().subtract(this.pos).normalize();
       const distSq = this.pos.distanceSq(this.pullPoint);
       const pullForce = dirVec.multiplyScalar(PULL_FACTOR * distSq);
-      // console.log("🚀 ~ file: Bubble.js ~ line 40 ~ Bubble ~ updatePhysics ~ pullForce", pullForce)
       this.applyForce(pullForce);
     }
 
@@ -77,8 +76,8 @@ class Bubble {
     this.pos.add(this.velocity);
 
     // Calculate noise offset
-    this.noiseOffset.x = (STATIC_Q5.noise(this.frame / 1200) - 0.5) * NOISE_OFFSET;
-    this.noiseOffset.y = (STATIC_Q5.noise(this.frame / 600) - 0.5) * NOISE_OFFSET;
+    this.noiseOffset.x = (STATIC_Q5.noise(this.frame / 1200) - 0.5) * POSITION_NOISE_OFFSET;
+    this.noiseOffset.y = (STATIC_Q5.noise(this.frame / 600) - 0.5) * POSITION_NOISE_OFFSET;
 
     // update frame count
     this.frame += 1;
@@ -98,19 +97,16 @@ class Bubble {
 
     // Save state
     ctx.save();
-
     
     const step = q5.TWO_PI / POINTS_NUMBER;
     let x, y, noise;
     let p = new Victor(0, 0);
-
     ctx.beginPath();
     for (let angle = 0; angle < q5.TWO_PI; angle += step) {
       p.x = q5.cos(angle);
       p.y = q5.sin(angle);
       noise = q5.map(q5.noise(p.x * 0.25 + 1 + this.frame / 500, p.y * 0.25 + 1 + this.frame / 500),0,1, -WOBBLE_RADIUS, WOBBLE_RADIUS);
       p.multiplyScalar(CIRCLE_RADIUS + noise);
-
       if(angle ===  0){
         ctx.moveTo(xPos + p.x, yPos + p.y)
       }else{

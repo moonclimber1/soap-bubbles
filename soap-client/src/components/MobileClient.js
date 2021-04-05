@@ -1,4 +1,5 @@
 import React from "react";
+import ImageUploadButton from './ImageUploadButton'
 import io from "socket.io-client";
 import Victor from "victor";
 import Q5 from "../assets/q5.js";
@@ -146,13 +147,16 @@ class MobileClient extends React.Component {
       // Emit Message
        this.socket.emit("blow", {id: this.bubble.id, blowForce: blowForce});
     }
-    
+  }
 
+  handleImageSelect(img){
+    console.log("Image selected", img)
   }
 
   render() {
     return (
       <div className="mobile-client">
+        <ImageUploadButton onImageSelect={ img => this.handleImageSelect(img) }/>
         <div id="canvas-wrapper"></div>
       </div>
     );
