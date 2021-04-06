@@ -1,12 +1,13 @@
 import Victor from "victor";
 import Q5 from "../assets/q5.js";
 import ImageLibrary from "../common/ImageLibrary";
+import BubbleWorld from "../components/BubbleWorld.js";
 
-const CIRCLE_RADIUS = 100;
+const CIRCLE_RADIUS = 80;
 const POINTS_NUMBER = 100;
-const WOBBLE_RADIUS = CIRCLE_RADIUS / 3
+const WOBBLE_RADIUS = CIRCLE_RADIUS / 1.5
 
-const BUBBLE_SIZE = (CIRCLE_RADIUS + WOBBLE_RADIUS) * 2
+const BUBBLE_SIZE = (CIRCLE_RADIUS + WOBBLE_RADIUS*0.8) * 2
 
 const POSITION_NOISE_OFFSET = 200;
 
@@ -62,7 +63,8 @@ class Bubble {
   }
 
   isAboveTop(){
-    return (this.pos.y < -BUBBLE_SIZE/2)
+    const yPos = this.pos.y + this.noiseOffset.y;
+    return (yPos < -BUBBLE_SIZE/2)
   }
 
   updatePhysics() {
@@ -106,13 +108,13 @@ class Bubble {
     ctx.save();
     
     const step = q5.TWO_PI / POINTS_NUMBER;
-    let x, y, noise;
+    let noise;
     let p = new Victor(0, 0);
     ctx.beginPath();
     for (let angle = 0; angle < q5.TWO_PI; angle += step) {
       p.x = q5.cos(angle);
       p.y = q5.sin(angle);
-      noise = q5.map(q5.noise(p.x * 0.25 + 1 + this.frame / 500, p.y * 0.25 + 1 + this.frame / 500),0,1, -WOBBLE_RADIUS, WOBBLE_RADIUS);
+      noise = q5.map(q5.noise(p.x * 0.25 + 1 + this.frame / 500, p.y * 0.25 + 1 + this.frame / 500),0,1, 0, WOBBLE_RADIUS);
       p.multiplyScalar(CIRCLE_RADIUS + noise);
       if(angle ===  0){
         ctx.moveTo(xPos + p.x, yPos + p.y)
@@ -122,15 +124,37 @@ class Bubble {
     }
     ctx.closePath();
     
-    // Draw Outline
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = 'white'
-    ctx.stroke();
+  
 
     // Draw clipped image
     ctx.clip()
     const img = this.imageLibrary.getImage(this.id)
-    if (img) ctx.drawImage(img, xPos - BUBBLE_SIZE/2 ,  yPos - BUBBLE_SIZE/2, BUBBLE_SIZE, BUBBLE_SIZE)
+
+    if (img){
+
+      let x, y, width, height;
+
+      if(img.width < img.height){
+        // Hochformat
+        width = BUBBLE_SIZE
+        height = (BUBBLE_SIZE / img.width) * img.height
+        x = xPos - BUBBLE_SIZE / 2
+        y = yPos - height / 2
+
+      }else{
+        // Querformat
+        width = (BUBBLE_SIZE / img.height) * img.width
+        height = BUBBLE_SIZE
+        x = xPos - width / 2
+        y = yPos - BUBBLE_SIZE / 2
+      }
+      ctx.drawImage(img, x , y, width, height)
+    }
+
+    // Draw Outline
+    ctx.lineWidth = 4;
+    ctx.strokeStyle = 'white'
+    ctx.stroke();
 
     // Reset clip
     ctx.restore();

@@ -127,6 +127,7 @@ class MobileClient extends React.Component {
       return;
     }
     // Emit Message
+    delete this.bubble.imageLibrary
     this.socket.emit("send to world", this.bubble);
   }
 

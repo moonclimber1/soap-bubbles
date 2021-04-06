@@ -20,7 +20,7 @@ class BubbleWorld extends React.Component {
       bubble.imageLibrary = this.imageLibrary;
       bubble.pos.x = Math.random() * window.innerWidth;
       bubble.pos.y = window.innerHeight+100;
-      bubble.setPullPoint( { x: window.innerWidth / 2, y: (3 * window.innerHeight) / 4});
+      bubble.setPullPoint( { x: window.innerWidth * (0.1 + Math.random() * 0.8), y: window.innerHeight * (0.1 + Math.random() * 0.8)});
       console.log("🚀 ~ file: BubbleWorld.js ~ line 18 ~ BubbleWorld ~ this.socket.on ~ bubble", bubble);
 
       this.bubbles.push(bubble);
