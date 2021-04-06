@@ -38,9 +38,10 @@ io.on('connection', (socket) => {
   }
 
   socket.on('transfer image', (img) => {
+    console.log("got image on server", img)
+    if(!worldClient) return;
     io.to(worldClient.id).emit('transfer image', img)
   })
-
 
   socket.on('send to world', (bubble) => {
     console.log("got bubble sent to me", bubble)

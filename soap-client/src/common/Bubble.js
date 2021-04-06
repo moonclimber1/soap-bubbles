@@ -1,9 +1,12 @@
 import Victor from "victor";
-import Q5 from "./assets/q5.js";
+import Q5 from "../assets/q5.js";
+import ImageLibrary from "../common/ImageLibrary";
 
 const CIRCLE_RADIUS = 100;
 const POINTS_NUMBER = 100;
 const WOBBLE_RADIUS = CIRCLE_RADIUS / 3
+
+const BUBBLE_SIZE = (CIRCLE_RADIUS + WOBBLE_RADIUS) * 2
 
 const POSITION_NOISE_OFFSET = 200;
 
@@ -13,16 +16,16 @@ const PULL_FACTOR = 0.00000002;
 const STATIC_Q5 = new Q5(window.document, "offscreen");
 
 class Bubble {
-  constructor(id, startPos, pullEnabled, pullPoint, imagePath) {
+  constructor(id, startPos, pullEnabled, pullPoint, imageLibrary) {
     this.id = id;
-    this.imagePath = imagePath;
+    this.imageLibrary = imageLibrary;
 
-    const img = new Image()
-    img.onload = () => {
-      this.image = img
-      console.log("img loaded", this.image)
-    };
-    img.src = imagePath;
+    // const img = new Image()
+    // img.onload = () => {
+    //   this.image = img
+    //   console.log("img loaded", this.image)
+    // };
+    // img.src = imagePath;
 
     this.pos = new Victor(startPos.x, startPos.y);
     this.velocity = new Victor(0, 0);
@@ -42,7 +45,7 @@ class Bubble {
   }
 
   static createFromBubble(bubble) {
-    const newBubble = new Bubble(bubble.id, bubble.pos, bubble.pullEnabled, bubble.pullPoint, bubble.imagePath);
+    const newBubble = new Bubble(bubble.id, bubble.pos, bubble.pullEnabled, bubble.pullPoint, bubble.imageLibrary);
     newBubble.velocity = new Victor(bubble.velocity.x, bubble.velocity.y);
     newBubble.noiseOffset = bubble.noiseOffset;
     newBubble.frame = bubble.frame;
@@ -56,6 +59,10 @@ class Bubble {
 
   applyForce(forceVector) {
     this.velocity.add(forceVector);
+  }
+
+  isAboveTop(){
+    return (this.pos.y < -BUBBLE_SIZE/2)
   }
 
   updatePhysics() {
@@ -122,8 +129,8 @@ class Bubble {
 
     // Draw clipped image
     ctx.clip()
-    const imgWidth = (CIRCLE_RADIUS + WOBBLE_RADIUS) * 2
-    if (this.image) ctx.drawImage(this.image, xPos - imgWidth/2 ,  yPos - imgWidth/2, imgWidth, imgWidth)
+    const img = this.imageLibrary.getImage(this.id)
+    if (img) ctx.drawImage(img, xPos - BUBBLE_SIZE/2 ,  yPos - BUBBLE_SIZE/2, BUBBLE_SIZE, BUBBLE_SIZE)
 
     // Reset clip
     ctx.restore();

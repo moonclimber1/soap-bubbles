@@ -1,9 +1,8 @@
 import React from "react";
 import io from "socket.io-client";
-import Victor from "victor";
 import Stats from 'stats.js'
 import Q5 from "../assets/q5.js";
-import Bubble from "../Bubble.js";
+import Bubble from "../common/Bubble.js";
 class BubbleWorld extends React.Component {
   constructor(props) {
     super(props);

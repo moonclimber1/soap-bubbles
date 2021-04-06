@@ -1,19 +1,19 @@
 import React from "react";
 import ImageUploadButton from './ImageUploadButton'
 import io from "socket.io-client";
-import Victor from "victor";
 import Q5 from "../assets/q5.js";
-import Bubble from "../Bubble.js";
+import Bubble from "../common/Bubble.js";
 
 import img from '../assets/soap-bubble.jpg';
+import ImageLibrary from "../common/ImageLibrary";
 
 class MobileClient extends React.Component {
   constructor(props) {
     super(props);
     this.bubbleCount = 0;
     this.bubble = null;
-
     this.bubbleIsHere = true;
+    this.imageLibrary = new ImageLibrary();
   }
 
   componentDidMount() {
@@ -34,7 +34,7 @@ class MobileClient extends React.Component {
 
       q5.draw = () => {
         if (q5.keyIsDown(q5.UP_ARROW)) {
-          this.blow(new Victor(0, -2));
+          this.blow({ x: 0, y: -2 });
         }
       
         if(!this.bubbleIsHere) return;
@@ -45,8 +45,8 @@ class MobileClient extends React.Component {
         
 
         this.bubble.draw(q5);
-        if (this.bubble.pos.y < -150) {
-          console.log("🚀 ~ file: MobileClient.js ~ line 46 ~ MobileClient ~ this.socket.on ~ this.bubble", this.bubble)
+        if (this.bubble.isAboveTop()) {
+          console.log("🚀 ~ Sending Bubble", this.bubble)
           this.sendBubbleToWorld();
           this.bubbleIsHere = false;
         }
@@ -86,7 +86,7 @@ class MobileClient extends React.Component {
           average = values / length;
           if (average > 20) {
             self.blow({ x: 0, y: average * average * -0.0005 })
-            console.log("blow");
+            // console.log("blow");
           }
           average = values = 0;
         };
@@ -116,14 +116,8 @@ class MobileClient extends React.Component {
         x: window.innerWidth / 2,
         y: (3 * window.innerHeight) / 4,
       },
-      img
+      this.imageLibrary
     );
-
-    // return {
-    //   id: bubbleID,
-    //   velocity: { x: 0, y: 1 },
-    //   imagePath: "",
-    // };
   }
 
   sendBubbleToWorld() {
@@ -149,8 +143,22 @@ class MobileClient extends React.Component {
     }
   }
 
-  handleImageSelect(img){
-    console.log("Image selected", img)
+  handleImageSelect(imgDataURL){
+    console.log("Image selected", imgDataURL)
+
+    const img = new Image()
+    img.src = imgDataURL;
+    this.imageLibrary.addImage(this.bubble.id, img)
+
+    // const reader = new FileReader();
+    // const socket = this.socket;
+    // reader.onload = function() {
+    //   const bytes = new Uint8Array(this.result);
+    //   socket.emit('transfer image', bytes)
+    // }
+    // reader.readAsArrayBuffer(img);
+
+     
   }
 
   render() {
