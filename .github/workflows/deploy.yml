@@ -23,7 +23,7 @@ jobs:
             cd soap-bubbles
             git pull
             docker-compose down
-            docker-compose build nodejs webserver
+            docker-compose build --force-rm --no-cache nodejs webserver
             docker-compose up -d
  
     # - name: SSH to Server
