@@ -14,6 +14,7 @@ class MobileClient extends React.Component {
     this.bubble = null;
     this.bubbleIsHere = true;
     this.imageLibrary = new ImageLibrary();
+    this.imageSelected = false;
   }
 
   componentDidMount() {
@@ -136,7 +137,7 @@ class MobileClient extends React.Component {
       console.log("Error: No bubble exists to be blown!");
       return;
     }
-    if(this.bubbleIsHere){
+    if(this.bubbleIsHere && this.imageSelected){
       this.bubble.applyForce(blowForce);
     }else{
       // Emit Message
@@ -145,13 +146,14 @@ class MobileClient extends React.Component {
   }
 
   handleImageSelect(imgDataURL){
-    // console.log("Image selected", imgDataURL)
 
     const img = new Image()
     img.src = imgDataURL;
     this.imageLibrary.addImage(this.bubble.id, img)
 
     this.socket.emit('transfer image', {id: this.bubble.id, dataURL: imgDataURL})
+
+    this.imageSelected = true
   }
 
   render() {
