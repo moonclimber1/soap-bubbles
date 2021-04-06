@@ -3,10 +3,12 @@ import io from "socket.io-client";
 import Stats from 'stats.js'
 import Q5 from "../assets/q5.js";
 import Bubble from "../common/Bubble.js";
+import ImageLibrary from "../common/ImageLibrary.js";
 class BubbleWorld extends React.Component {
   constructor(props) {
     super(props);
     this.bubbles = [];
+    this.imageLibrary = new ImageLibrary();
   }
 
   componentDidMount() {
@@ -15,6 +17,7 @@ class BubbleWorld extends React.Component {
     this.socket.on("send to world", (bubbleData) => {
       console.log("World received bubble yeahh", bubbleData);
       const bubble = Bubble.createFromBubble(bubbleData);
+      bubble.imageLibrary = this.imageLibrary;
       bubble.pos.x = Math.random() * window.innerWidth;
       bubble.pos.y = window.innerHeight+100;
       bubble.setPullPoint( { x: window.innerWidth / 2, y: (3 * window.innerHeight) / 4});
@@ -33,6 +36,14 @@ class BubbleWorld extends React.Component {
         bubble.applyForce(blowInfo.blowForce);
       }
     });
+
+    this.socket.on('transfer image', (imgInfo) => {
+      const img = new Image()
+      img.src = imgInfo.dataURL;
+      this.imageLibrary.addImage(imgInfo.id, img)
+    });
+
+    
 
     var stats = new Stats();
     stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom

@@ -144,21 +144,13 @@ class MobileClient extends React.Component {
   }
 
   handleImageSelect(imgDataURL){
-    console.log("Image selected", imgDataURL)
+    // console.log("Image selected", imgDataURL)
 
     const img = new Image()
     img.src = imgDataURL;
     this.imageLibrary.addImage(this.bubble.id, img)
 
-    // const reader = new FileReader();
-    // const socket = this.socket;
-    // reader.onload = function() {
-    //   const bytes = new Uint8Array(this.result);
-    //   socket.emit('transfer image', bytes)
-    // }
-    // reader.readAsArrayBuffer(img);
-
-     
+    this.socket.emit('transfer image', {id: this.bubble.id, dataURL: imgDataURL})
   }
 
   render() {
