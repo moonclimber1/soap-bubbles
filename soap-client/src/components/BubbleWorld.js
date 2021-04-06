@@ -62,10 +62,9 @@ class BubbleWorld extends React.Component {
       q5.background(backgroundColor);
       // const xLen = window.innerWidth / this.bubbles.length
       this.bubbles.forEach((bubble, index) => {
+        
+        bubble.applyForce({x: (q5.noise(bubble.frame/600 + index)-0.5)*0.02, y: (q5.noise(bubble.frame/600 + index)-0.5)*0.02});
         bubble.draw(q5);
-        // const color = bubble.color;
-        // q5.fill(q5.color(color._r,color._g,color._b))
-        // q5.ellipse(xLen * index + 50,bubble.pos.y,100,100)
       });
       stats.end();
     };

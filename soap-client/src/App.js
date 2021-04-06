@@ -1,5 +1,5 @@
 
-import './App.css';
+import './App.scss';
 import VolumeMeter from './components/VolumeMeter';
 import React from 'react';
 

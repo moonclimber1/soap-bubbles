@@ -48,7 +48,7 @@ class ImageUploadButton extends React.Component {
           onChange={(e) => this.handleOnFileChange(e)}
           hidden
         />
-        <label for="upload-input">Bild auswählen</label>
+        <label for="upload-input">Memories</label>
       </div>
     );
   }

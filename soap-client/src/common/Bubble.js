@@ -3,9 +3,9 @@ import Q5 from "../assets/q5.js";
 import ImageLibrary from "../common/ImageLibrary";
 import BubbleWorld from "../components/BubbleWorld.js";
 
-const CIRCLE_RADIUS = 80;
+const CIRCLE_RADIUS = 70;
 const POINTS_NUMBER = 100;
-const WOBBLE_RADIUS = CIRCLE_RADIUS / 1.5
+const WOBBLE_RADIUS = CIRCLE_RADIUS
 
 const BUBBLE_SIZE = (CIRCLE_RADIUS + WOBBLE_RADIUS*0.8) * 2
 
@@ -41,8 +41,6 @@ class Bubble {
     const C1 = STATIC_Q5.color(34, 193, 195);
     const C2 = STATIC_Q5.color(253, 187, 45);
     this.color = STATIC_Q5.lerpColor(C1, C2, Math.random());
-
-    this.t = 0;
   }
 
   static createFromBubble(bubble) {
@@ -64,7 +62,7 @@ class Bubble {
 
   isAboveTop(){
     const yPos = this.pos.y + this.noiseOffset.y;
-    return (yPos < -BUBBLE_SIZE/2)
+    return (yPos < - BUBBLE_SIZE/2)
   }
 
   updatePhysics() {

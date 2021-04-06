@@ -157,8 +157,8 @@ class MobileClient extends React.Component {
   render() {
     return (
       <div className="mobile-client">
-        <ImageUploadButton onImageSelect={ img => this.handleImageSelect(img) }/>
         <div id="canvas-wrapper"></div>
+        <ImageUploadButton onImageSelect={ img => this.handleImageSelect(img) }/>
       </div>
     );
   }

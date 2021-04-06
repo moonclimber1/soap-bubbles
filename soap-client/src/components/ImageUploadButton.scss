@@ -1,17 +1,15 @@
 .image-upload-button{
 
     position: absolute;
-    top: 100px;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
 
     label{
-        background-color: indigo;
-        color: white;
+        font-size: 3.5rem;
+        color: #FF6492;
         padding: 0.5rem;
-        font-family: sans-serif;
-        border-radius: 0.3rem;
         cursor: pointer;
-        margin-top: 1rem;
+        width: 100vw;
     }
 }
