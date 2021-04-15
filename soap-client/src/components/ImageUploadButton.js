@@ -25,17 +25,6 @@ class ImageUploadButton extends React.Component {
       self.props.onImageSelect(`${img.prefix}${img.data}`)
       console.log("🚀 Image sucessfully compressed", img)
     });
-
-
-
-
-    // // const handler = this.props.onImageSelect
-    // const self = this;
-    // const reader = new FileReader();
-    // reader.onload = function() {
-    //   self.props.onImageSelect(this.result)
-    // }
-    // reader.readAsDataURL(file);
   }
 
   render() {

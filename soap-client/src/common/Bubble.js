@@ -1,7 +1,5 @@
 import Victor from "victor";
 import Q5 from "../assets/q5.js";
-import ImageLibrary from "../common/ImageLibrary";
-import BubbleWorld from "../components/BubbleWorld.js";
 
 const CIRCLE_RADIUS = 70;
 const POINTS_NUMBER = 100;
@@ -20,14 +18,7 @@ class Bubble {
   constructor(id, startPos, pullEnabled, pullPoint, imageLibrary) {
     this.id = id;
     this.imageLibrary = imageLibrary;
-
-    // const img = new Image()
-    // img.onload = () => {
-    //   this.image = img
-    //   console.log("img loaded", this.image)
-    // };
-    // img.src = imagePath;
-
+    
     this.pos = new Victor(startPos.x, startPos.y);
     this.velocity = new Victor(0, 0);
     this.noiseOffset = new Victor(0, 0);

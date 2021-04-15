@@ -11,19 +11,9 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-
-
 let mobileClients = [];
 let worldClient = null;
 
-
-io.on('send', (bubble) => {
-  bubbles.push(bubble)
-});
-
-io.on('blow', (bubbleId) => {
-
-});
 
 io.on('connection', (socket) => {
   console.log('new client connected');
@@ -62,16 +52,11 @@ io.on('connection', (socket) => {
       io.to(client.id).emit('send to client')
     });
   })
-
-
   
   socket.on('disconnect', () => {
     console.log('client disconnected');
   });
-
-  // socket.on('chat message', (msg) => {
-  //   io.emit('chat message', msg);
-  // });
+  
 });
 
 server.listen(7777, () => {
