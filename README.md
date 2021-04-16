@@ -1,3 +1,5 @@
+
+
 # Memories 
 ## Cross-Device Web Project
 
@@ -6,6 +8,9 @@ This project explores the possibilities of creative cross-device applications.
 In a fictitious art exhibition on the theme of memories, visitors have the opportunity to create a soap bubble with a personal memory. A photo can be selected and then be sent out to the wide world by blowing into the microphone of the mobile device. The world is represented by a large projection in the exhibition, where all the bubbles of different visitors are floating around.
 
 The project was created during the course *Studio Web & Mobile Design 2* in the Digital Ideation studies at Lucerne University of Applied Science and Arts HSLU.
+
+https://user-images.githubusercontent.com/55745851/115087552-9f8b5800-9f0e-11eb-9e40-d9172b876a33.mp4
+
 
 ## Technologies & Libraries
 
