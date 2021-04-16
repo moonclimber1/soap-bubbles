@@ -1,7 +1,7 @@
 import Victor from "victor";
 import Q5 from "../assets/q5.js";
 
-const CIRCLE_RADIUS = 70;
+const CIRCLE_RADIUS = 45;
 const POINTS_NUMBER = 100;
 const WOBBLE_RADIUS = CIRCLE_RADIUS * 1.5
 

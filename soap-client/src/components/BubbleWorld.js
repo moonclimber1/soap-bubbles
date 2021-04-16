@@ -45,9 +45,9 @@ class BubbleWorld extends React.Component {
 
     
 
-    var stats = new Stats();
-    stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
-    document.body.appendChild( stats.dom );
+    // var stats = new Stats();
+    // stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+    // document.body.appendChild( stats.dom );
 
 
     const canvasWrapper = document.getElementById("world-canvas-wrapper");
