@@ -9,7 +9,7 @@ The project was created during the course *Studio Web & Mobile Design 2* in the 
 
 ## Technologies & Libraries
 
-Backend: Ubuntu Server, NGINX, Node Server with express.js & socket.io, Docker & Docker Compose, Github Actions
+Backend: Docker & Docker Compose, Ubuntu Server, NGINX, Node Server with express.js & socket.io, Let's encrypt, Github Actions
 Frontend: React, Q5.js, compress.js, victor.js
 
 

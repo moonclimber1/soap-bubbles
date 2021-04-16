@@ -46,12 +46,6 @@ io.on('connection', (socket) => {
     if(!worldClient) return;
     io.to(worldClient.id).emit('blow', blowInfo)
   })
-
-  socket.on('send to client', (bubble) => {
-    mobileClients.forEach(client =>{
-      io.to(client.id).emit('send to client')
-    });
-  })
   
   socket.on('disconnect', () => {
     console.log('client disconnected');
