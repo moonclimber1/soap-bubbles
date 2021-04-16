@@ -81,12 +81,35 @@ class Bubble {
     this.frame += 1;
   }
 
+  drawBackgroundWobble(q5, xPos, yPos){
+    const ctx = q5.drawingContext;
+    const step = q5.TWO_PI / POINTS_NUMBER;
+    let noise;
+    let p = new Victor(0, 0);
+    ctx.beginPath();
+    for (let angle = 0; angle < q5.TWO_PI; angle += step) {
+      p.x = q5.cos(angle);
+      p.y = q5.sin(angle);
+      noise = q5.map(q5.noise(p.x * 0.25 + 100 + this.frame / 421, p.y * 0.25 + 66 + this.frame / 377),0,1, 0, WOBBLE_RADIUS*1.6);
+      p.multiplyScalar(CIRCLE_RADIUS * 0.8 + noise);
+      if(angle ===  0){
+        ctx.moveTo(xPos + p.x, yPos + p.y)
+      }else{
+        ctx.lineTo(xPos + p.x, yPos + p.y)
+      }
+    }
+    ctx.closePath();
+    ctx.fillStyle = "blue";
+    ctx.fill()
+  }
+
   draw(q5) {
     
     // Calculate noise offset position
     let xPos = this.pos.x + this.noiseOffset.x;
     let yPos = this.pos.y + this.noiseOffset.y;
     
+    this.drawBackgroundWobble(q5, xPos, yPos)
 
     // Draw Wobbly Circle
 
