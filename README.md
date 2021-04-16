@@ -19,8 +19,9 @@ Server Setup
 
 ## Screenshots
 
-<img width="1680" alt="Bildschirmfoto 2021-04-16 um 23 37 06" src="https://user-images.githubusercontent.com/55745851/115086819-4c64d580-9f0d-11eb-9010-88030d6c6dee.png">
-![Bildschirmfoto 2021-04-06 um 10 50 15](https://user-images.githubusercontent.com/55745851/115086830-51c22000-9f0d-11eb-90a1-deebe2492bd8.png)
+![Bildschirmfoto 2021-04-06 um 10 50 15](https://user-images.githubusercontent.com/55745851/115086979-a06fba00-9f0d-11eb-87f5-b04f9d308b0f.png)
+
+<img width="1680" alt="Bildschirmfoto 2021-04-16 um 23 37 06" src="https://user-images.githubusercontent.com/55745851/115086999-a796c800-9f0d-11eb-8252-c8a9e0387fc9.png">
 
 
 Concept, Design, Programming: Jonas Wolter
